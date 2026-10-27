@@ -1,0 +1,301 @@
+:root {
+  --fon: var(--tg-theme-bg-color, #17212b);
+  --fon2: var(--tg-theme-secondary-bg-color, #232e3c);
+  --tekst: var(--tg-theme-text-color, #f2f4f7);
+  --tusklyy: var(--tg-theme-hint-color, #8d9aa8);
+  --aktsent: var(--tg-theme-button-color, #2ea6ff);
+  --aktsent-tekst: var(--tg-theme-button-text-color, #fff);
+  --ssylka: var(--tg-theme-link-color, #6ab3f3);
+  --granitsa: color-mix(in srgb, var(--tusklyy) 22%, transparent);
+  --plokho: #ff6b6b;
+  --khorosho: #4bd07a;
+  --radius: 14px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--fon); color: var(--tekst);
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overscroll-behavior: none;
+}
+
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: var(--ssylka); }
+
+.ekran { position: fixed; inset: 0; display: flex; flex-direction: column; }
+
+/* ---------- шапка ---------- */
+.shapka {
+  flex: 0 0 auto;
+  display: flex; align-items: center; gap: 8px;
+  padding: calc(env(safe-area-inset-top) + 8px) 12px 8px;
+  background: var(--fon); border-bottom: 1px solid var(--granitsa);
+}
+.shapka-tsentr { flex: 1; min-width: 0; text-align: center; }
+.shapka-imya { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shapka-podpis {
+  color: var(--tusklyy); font-size: 11px; margin-top: 1px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.shapka > .shapka-imya { flex: 1; }
+.knopka-ikonka {
+  width: 36px; height: 36px; border-radius: 50%; flex: 0 0 auto;
+  font-size: 22px; line-height: 1; color: var(--tusklyy);
+  display: flex; align-items: center; justify-content: center;
+}
+.knopka-ikonka:active { background: var(--fon2); }
+
+/* ---------- список чатов ---------- */
+.kontent {
+  flex: 1; overflow-y: auto;
+  padding: 12px 12px calc(env(safe-area-inset-bottom) + 24px);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.chat-kartochka { background: var(--fon2); border-radius: var(--radius); padding: 12px 14px; }
+.chat-kartochka:active { opacity: .7; }
+.chat-verkh { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.chat-imya { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-vremya { color: var(--tusklyy); font-size: 12px; flex: 0 0 auto; }
+.chat-niz {
+  display: flex; justify-content: space-between; gap: 10px;
+  color: var(--tusklyy); font-size: 12px; margin-top: 4px;
+}
+.chat-proekt { font-family: var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-kartochka.running { box-shadow: inset 0 0 0 1px var(--aktsent); }
+
+/* ---------- лента ---------- */
+.lenta {
+  flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 12px 12px 8px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.soobshchenie { max-width: 100%; overflow-wrap: anywhere; }
+.soobshchenie.moy {
+  align-self: flex-end; max-width: 85%;
+  background: var(--aktsent); color: var(--aktsent-tekst);
+  padding: 8px 12px; border-radius: 16px 16px 4px 16px; white-space: pre-wrap;
+}
+.soobshchenie.otvet { align-self: stretch; }
+.soobshchenie.otvet p { margin: 0 0 8px; }
+.soobshchenie.otvet p:last-child { margin-bottom: 0; }
+.soobshchenie.otvet h3, .soobshchenie.otvet h4, .soobshchenie.otvet h5, .soobshchenie.otvet h6 {
+  margin: 12px 0 6px; font-size: 15px;
+}
+.soobshchenie.otvet ul, .soobshchenie.otvet ol { margin: 4px 0 8px; padding-left: 22px; }
+.soobshchenie.otvet li { margin: 2px 0; }
+.soobshchenie.otvet hr { border: 0; border-top: 1px solid var(--granitsa); margin: 10px 0; }
+.chernovik { opacity: .92; }
+
+code {
+  font-family: var(--mono); font-size: 13px;
+  background: var(--fon2); padding: 1px 5px; border-radius: 5px;
+}
+pre.kod {
+  background: var(--fon2); border-radius: 10px; padding: 10px 12px;
+  overflow-x: auto; margin: 8px 0;
+}
+pre.kod code { background: none; padding: 0; font-size: 12.5px; line-height: 1.5; }
+
+/* ---------- инструменты ---------- */
+.instrument, .razmyshlenie {
+  background: var(--fon2); border-radius: 10px; overflow: hidden;
+  border: 1px solid transparent;
+}
+.instrument.sboy { border-color: color-mix(in srgb, var(--plokho) 45%, transparent); }
+.instrument summary, .razmyshlenie summary {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; cursor: pointer; list-style: none; font-size: 13px;
+}
+.instrument summary::-webkit-details-marker, .razmyshlenie summary::-webkit-details-marker { display: none; }
+.i-znachok { color: var(--aktsent); flex: 0 0 auto; }
+.i-imya { font-weight: 600; flex: 0 0 auto; }
+.i-kratko {
+  color: var(--tusklyy); font-family: var(--mono); font-size: 12px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0;
+}
+.i-sostoyanie { color: var(--tusklyy); font-size: 11px; flex: 0 0 auto; }
+.i-sostoyanie.plokho { color: var(--plokho); }
+.i-telo { border-top: 1px solid var(--granitsa); padding: 8px 12px; }
+.i-vkhod, .i-vykhod {
+  font-family: var(--mono); font-size: 12px; line-height: 1.5;
+  white-space: pre-wrap; overflow-x: auto; margin: 0;
+  max-height: 300px; overflow-y: auto;
+}
+.i-vykhod { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--granitsa); color: var(--tusklyy); }
+
+.razmyshlenie summary { color: var(--tusklyy); font-style: italic; }
+.razmyshlenie-tekst {
+  padding: 0 12px 10px; color: var(--tusklyy); font-size: 13px; white-space: pre-wrap;
+}
+
+/* ---------- diff и файлы ---------- */
+.diff {
+  font-family: var(--mono); font-size: 12px; line-height: 1.45; margin: 0;
+  display: flex; flex-direction: column; overflow-x: auto;
+  max-height: 340px; overflow-y: auto;
+}
+.diff span { white-space: pre; padding: 0 4px; }
+.diff .plyus { background: color-mix(in srgb, var(--khorosho) 16%, transparent); color: var(--khorosho); }
+.diff .minus { background: color-mix(in srgb, var(--plokho) 14%, transparent); color: var(--plokho); }
+.diff .rovno { color: var(--tusklyy); }
+.instrument.pravka .i-telo { padding: 8px 0; }
+
+.fayly-spisok { display: flex; flex-direction: column; margin: 10px 0; max-height: 55vh; overflow-y: auto; }
+.fayl-stroka {
+  display: flex; justify-content: space-between; gap: 10px; padding: 10px 4px;
+  border-bottom: 1px solid var(--granitsa); font-size: 14px;
+}
+.fayl-stroka.papka .fayl-imya { color: var(--aktsent); }
+.fayl-imya { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fayl-sprava { color: var(--tusklyy); font-size: 12px; flex: 0 0 auto; }
+.fayl-tekst {
+  font-family: var(--mono); font-size: 12px; line-height: 1.5;
+  background: var(--fon2); border-radius: 10px; padding: 10px;
+  max-height: 55vh; overflow: auto; white-space: pre-wrap; margin: 10px 0 0;
+}
+.shtorka-list.vysokiy { min-height: 70vh; }
+.knopka-ikonka.malaya { width: 32px; height: 32px; font-size: 20px; }
+
+/* ---------- разрешения ---------- */
+.razreshenie {
+  background: var(--fon2); border-radius: 12px; padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--aktsent) 45%, transparent);
+}
+.razreshenie.plan { border-color: color-mix(in srgb, var(--khorosho) 45%, transparent); }
+.razreshenie-shapka { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.razreshenie-telo {
+  font-size: 13px; color: var(--tusklyy); font-family: var(--mono);
+  max-height: 260px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.razreshenie.plan .razreshenie-telo { font-family: inherit; white-space: normal; color: var(--tekst); }
+.razreshenie-knopki { display: flex; gap: 8px; margin-top: 10px; }
+.razreshenie-knopki .knopka-vtorostepennaya { flex: 1; text-align: center; padding: 9px 8px; }
+.razreshenie-itog { margin-top: 8px; font-size: 12px; color: var(--khorosho); }
+.razreshenie-itog.plokho { color: var(--plokho); }
+
+/* ---------- задачи, плашки, итог ---------- */
+.zadachi { background: var(--fon2); border-radius: 10px; padding: 10px 12px; }
+.zadachi-shapka { font-size: 12px; color: var(--tusklyy); margin-bottom: 6px; }
+.zadacha { font-size: 13px; padding: 2px 0; }
+.zadacha.completed { color: var(--tusklyy); text-decoration: line-through; }
+.zadacha.in_progress { color: var(--aktsent); }
+
+.plashka {
+  align-self: center; text-align: center; color: var(--tusklyy);
+  font-size: 12px; padding: 6px 12px; background: var(--fon2); border-radius: 10px;
+}
+.plashka.plokho { color: var(--plokho); }
+.itog { align-self: center; color: var(--tusklyy); font-size: 11px; padding: 2px 0; }
+.itog.plokho { color: var(--plokho); }
+
+/* ---------- строка работы и ввод ---------- */
+.progress-line {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 8px;
+  padding: 6px 14px; font-size: 12px; color: var(--tusklyy);
+  border-top: 1px solid var(--granitsa);
+}
+.progress-metrics { margin-left: auto; }
+.krutilka {
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--granitsa); border-top-color: var(--aktsent);
+  animation: vrashchenie .8s linear infinite;
+}
+@keyframes vrashchenie { to { transform: rotate(360deg); } }
+
+.vvod {
+  flex: 0 0 auto; display: flex; align-items: flex-end; gap: 8px;
+  padding: 8px 10px calc(env(safe-area-inset-bottom) + 8px);
+  border-top: 1px solid var(--granitsa); background: var(--fon);
+}
+#pole {
+  flex: 1; resize: none; max-height: 160px;
+  background: var(--fon2); color: var(--tekst);
+  border: 0; border-radius: 18px; padding: 9px 14px;
+  font: inherit; line-height: 1.35; outline: none;
+}
+.knopka-krug {
+  width: 38px; height: 38px; border-radius: 50%; flex: 0 0 auto;
+  background: var(--aktsent); color: var(--aktsent-tekst); font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+}
+.knopka-krug.stop { background: var(--plokho); font-size: 13px; }
+.knopka-krug:active { opacity: .8; }
+
+.vniz {
+  position: absolute; right: 14px; bottom: 78px; z-index: 4;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--fon2); color: var(--tekst); box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+/* ---------- шторка ---------- */
+.shtorka { position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; }
+.shtorka-fon { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+.shtorka-list {
+  position: relative; width: 100%; max-height: 88vh; overflow-y: auto;
+  background: var(--fon); border-radius: 18px 18px 0 0;
+  padding: 8px 16px calc(env(safe-area-inset-bottom) + 20px);
+  animation: vsplytie .22s ease-out;
+}
+@keyframes vsplytie { from { transform: translateY(20px); opacity: .6; } }
+.shtorka-ruchka {
+  width: 36px; height: 4px; border-radius: 2px; background: var(--granitsa);
+  margin: 6px auto 12px;
+}
+.shtorka-zagolovok { font-weight: 600; margin-bottom: 14px; }
+.pole-gruppa { margin-bottom: 16px; }
+.pole-gruppa label { display: block; color: var(--tusklyy); font-size: 12px; margin-bottom: 6px; }
+.vybor { display: flex; flex-direction: column; gap: 6px; }
+.pereklyuchatel { display: flex; flex-wrap: wrap; gap: 6px; }
+.pereklyuchatel.kolonkoy { flex-direction: column; }
+.vybor-knopka {
+  background: var(--fon2); border-radius: 10px; padding: 8px 12px;
+  font-size: 13px; text-align: left; border: 1px solid transparent;
+}
+.vybor-knopka.shirokaya { width: 100%; }
+.vybor-knopka.shirokaya b { display: block; font-weight: 500; }
+.vybor-knopka.shirokaya span {
+  display: block; color: var(--tusklyy); font-size: 11px; font-family: var(--mono); margin-top: 2px;
+}
+.vybor-knopka.aktivna { border-color: var(--aktsent); color: var(--aktsent); }
+.pole-vvod {
+  width: 100%; margin-top: 8px; background: var(--fon2); color: var(--tekst);
+  border: 0; border-radius: 10px; padding: 9px 12px; font: inherit; outline: none;
+}
+.knopka-glavnaya.gotovo { margin-top: 14px; }
+.knopka-glavnaya {
+  width: 100%; background: var(--aktsent); color: var(--aktsent-tekst);
+  border-radius: 12px; padding: 13px; font-weight: 600;
+}
+.knopka-vtorostepennaya {
+  background: var(--fon2); border-radius: 12px; padding: 11px 14px; font-size: 14px;
+}
+.knopka-vtorostepennaya.shirokaya-knopka { width: 100%; margin-top: 10px; color: var(--tusklyy); }
+.knopka-vtorostepennaya.opasno { color: var(--plokho); }
+.knopki-ryad { display: flex; gap: 8px; }
+.knopki-ryad .knopka-vtorostepennaya { flex: 1; text-align: center; }
+.put-stroka {
+  font-family: var(--mono); font-size: 12px; color: var(--tusklyy);
+  background: var(--fon2); border-radius: 10px; padding: 10px 12px;
+  overflow-x: auto; white-space: nowrap;
+}
+
+/* ---------- прочее ---------- */
+.tsentr { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+.tochki { display: flex; gap: 6px; }
+.tochki i { width: 8px; height: 8px; border-radius: 50%; background: var(--tusklyy); animation: puls 1.1s infinite ease-in-out; }
+.tochki i:nth-child(2) { animation-delay: .15s; }
+.tochki i:nth-child(3) { animation-delay: .3s; }
+@keyframes puls { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+.oshibka-tekst { max-width: 320px; text-align: center; color: var(--plokho); padding: 20px; font-size: 14px; }
+.tost {
+  position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 80px);
+  transform: translateX(-50%); z-index: 30;
+  background: var(--fon2); color: var(--tekst); border-radius: 10px;
+  padding: 10px 16px; font-size: 13px; box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  max-width: 90vw; text-align: center;
+}

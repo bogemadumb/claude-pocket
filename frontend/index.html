@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>Claude в кармане</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="zagruzka" class="tsentr"><div class="tochki"><i></i><i></i><i></i></div></div>
+
+<!-- ЭКРАН: список чатов -->
+<section id="ekran-spisok" class="ekran" hidden>
+  <header class="shapka">
+    <div class="shapka-imya">Чаты</div>
+    <button class="knopka-ikonka" id="knopka-novyy" title="Новый чат">+</button>
+  </header>
+  <div class="kontent" id="spisok-chatov"></div>
+</section>
+
+<!-- ЭКРАН: чат -->
+<section id="ekran-chat" class="ekran" hidden>
+  <header class="shapka">
+    <button class="knopka-ikonka" id="knopka-nazad">‹</button>
+    <div class="shapka-tsentr">
+      <div class="shapka-imya" id="chat-zagolovok">Чат</div>
+      <div class="shapka-podpis" id="chat-podpis"></div>
+    </div>
+    <button class="knopka-ikonka" id="knopka-nastroyki">⋯</button>
+  </header>
+
+  <div class="lenta" id="lenta"></div>
+
+  <div class="progress-line" id="progress-line" hidden>
+    <span class="krutilka"></span>
+    <span id="progress-text">Думаю…</span>
+    <span class="progress-metrics" id="progress-metrics"></span>
+  </div>
+
+  <button class="vniz" id="knopka-vniz" hidden>↓</button>
+
+  <footer class="vvod">
+    <button id="knopka-skrepka" class="knopka-ikonka malaya" title="Прикрепить файл">+</button>
+    <button id="knopka-komandy" class="knopka-ikonka malaya" title="Команды и скиллы">/</button>
+    <input type="file" id="fayl-vkhod" hidden>
+    <textarea id="pole" rows="1" placeholder="Задача для Claude…" enterkeyhint="send"></textarea>
+    <button id="knopka-otpravit" class="knopka-krug">↑</button>
+    <button id="knopka-stop" class="knopka-krug stop" hidden>■</button>
+  </footer>
+</section>
+
+<!-- ШТОРКА: новый чат -->
+<div id="shtorka" class="shtorka" hidden>
+  <div class="shtorka-fon" data-zakryt></div>
+  <div class="shtorka-list">
+    <div class="shtorka-ruchka"></div>
+    <div class="shtorka-zagolovok">Новый чат</div>
+
+    <div class="pole-gruppa">
+      <label>Папка проекта</label>
+      <div id="vybor-proekta" class="vybor"></div>
+      <input id="svoy-put" class="pole-vvod" placeholder="или свой путь: /opt/…">
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Модель</label>
+      <div id="vybor-modeli" class="pereklyuchatel"></div>
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Глубина размышления</label>
+      <div id="vybor-efforta" class="pereklyuchatel"></div>
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Разрешения</label>
+      <div id="vybor-rezhima" class="pereklyuchatel kolonkoy"></div>
+    </div>
+
+    <button id="knopka-sozdat" class="knopka-glavnaya">Создать чат</button>
+  </div>
+</div>
+
+<!-- ШТОРКА: настройки чата -->
+<div id="shtorka-chat" class="shtorka" hidden>
+  <div class="shtorka-fon" data-zakryt></div>
+  <div class="shtorka-list">
+    <div class="shtorka-ruchka"></div>
+    <div class="shtorka-zagolovok">Настройки чата</div>
+
+    <div class="pole-gruppa">
+      <label>Название</label>
+      <input id="chat-imya-pole" class="pole-vvod" placeholder="Название чата">
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Модель</label>
+      <div id="chat-model" class="pereklyuchatel"></div>
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Глубина размышления</label>
+      <div id="chat-effort" class="pereklyuchatel"></div>
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Разрешения</label>
+      <div id="chat-rezhim" class="pereklyuchatel kolonkoy"></div>
+    </div>
+
+    <div class="pole-gruppa">
+      <label>Папка проекта</label>
+      <div id="chat-papka" class="put-stroka"></div>
+    </div>
+
+    <div class="knopki-ryad">
+      <button id="knopka-fork" class="knopka-vtorostepennaya">Ветка</button>
+      <button id="knopka-arkhiv" class="knopka-vtorostepennaya">В архив</button>
+      <button id="knopka-udalit" class="knopka-vtorostepennaya opasno">Удалить</button>
+    </div>
+    <button id="knopka-fayly" class="knopka-vtorostepennaya shirokaya-knopka">Файлы проекта</button>
+    <button class="knopka-glavnaya gotovo" data-zakryt>Готово</button>
+  </div>
+</div>
+
+<!-- ШТОРКА: команды и скиллы -->
+<div id="shtorka-komandy" class="shtorka" hidden>
+  <div class="shtorka-fon" data-zakryt></div>
+  <div class="shtorka-list">
+    <div class="shtorka-ruchka"></div>
+    <div class="shtorka-zagolovok">Команды</div>
+    <div id="spisok-komand" class="vybor"></div>
+    <div class="shtorka-zagolovok">Скиллы</div>
+    <div id="spisok-skillov" class="vybor"></div>
+    <button class="knopka-glavnaya gotovo" data-zakryt>Закрыть</button>
+  </div>
+</div>
+
+<!-- ШТОРКА: файлы проекта -->
+<div id="shtorka-fayly" class="shtorka" hidden>
+  <div class="shtorka-fon" data-zakryt></div>
+  <div class="shtorka-list vysokiy">
+    <div class="shtorka-ruchka"></div>
+    <div class="shtorka-zagolovok">Файлы</div>
+    <div id="fayly-put" class="put-stroka"></div>
+    <div id="fayly-spisok" class="fayly-spisok"></div>
+    <div id="fayl-prosmotr" hidden>
+      <div class="knopki-ryad">
+        <button id="knopka-v-telegram" class="knopka-vtorostepennaya">В Telegram</button>
+        <button id="knopka-upomyanut" class="knopka-vtorostepennaya">Вставить путь</button>
+        <button id="knopka-k-spisku" class="knopka-vtorostepennaya">Назад</button>
+      </div>
+      <pre id="fayl-tekst" class="fayl-tekst"></pre>
+    </div>
+    <button class="knopka-glavnaya gotovo" data-zakryt>Закрыть</button>
+  </div>
+</div>
+
+<div id="oshibka" class="tsentr" hidden><div class="oshibka-tekst" id="oshibka-tekst"></div></div>
+<div id="tost" class="tost" hidden></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

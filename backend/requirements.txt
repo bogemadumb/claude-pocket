@@ -1,0 +1,5 @@
+fastapi>=0.115
+uvicorn[standard]>=0.34
+pyjwt>=2.10
+python-multipart>=0.0.20
+claude-agent-sdk>=0.2.160

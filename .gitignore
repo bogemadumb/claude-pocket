@@ -1,0 +1,9 @@
+data/
+backend/data/
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+*.env
+!deploy/pocket.env.example
+.DS_Store

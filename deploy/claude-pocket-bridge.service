@@ -1,0 +1,15 @@
+[Unit]
+Description=Claude Pocket — Telegram bridge bot
+After=network.target claude-pocket.service
+
+[Service]
+Type=simple
+User=agent
+WorkingDirectory=/opt/claude-pocket/bridge
+EnvironmentFile=/opt/claude-pocket/pocket.env
+ExecStart=/usr/bin/python3 bridge.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
